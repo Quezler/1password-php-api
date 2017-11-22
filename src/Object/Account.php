@@ -4,13 +4,15 @@ namespace Quezler\OnePasswordPhpApi\Object;
 
 use Carbon\Carbon;
 use Quezler\OnePasswordPhpApi\OP;
+use Quezler\OnePasswordPhpApi\Traits\HasUuid;
 use stdClass;
 
 class Account
 {
+    use HasUuid;
+
     private $op;
 
-    public $uuid;
     public $type;
     public $state;
     public $createdAt;

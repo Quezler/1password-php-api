@@ -3,10 +3,13 @@
 namespace Quezler\OnePasswordPhpApi\Object;
 
 use Quezler\OnePasswordPhpApi\OP;
+use Quezler\OnePasswordPhpApi\Traits\HasUuid;
 use stdClass;
 
 class Item
 {
+    use HasUuid;
+
     /**
      * @var OP
      */

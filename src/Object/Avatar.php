@@ -22,6 +22,6 @@ class Avatar
     }
 
     public function getSrc() {
-        return $this->op->getAccount()->baseAvatarURL . $this->op->getAccount()->uuid .'/'.$this->filename;
+        return $this->op->getAccount()->baseAvatarURL . $this->op->getAccount()->getUuid() .'/'.$this->filename;
     }
 }
