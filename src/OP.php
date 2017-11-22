@@ -46,16 +46,20 @@ class OP
          return $this->getExport() .' && '. OP::getExecutablePath() .' '; // export OP_SESSION_my="foobar" && /path/to/package/src/../executable/op
     }
 
+    public function runOpCommand(string $command) {
+        $cmd = $this->getCommandPrefix() . $command;
+
+        exec($cmd, $output);
+
+        return \GuzzleHttp\json_decode($output[0]);
+    }
+
     /**
      * @return Collection|Vault[]
      */
     public function getVaults(): Collection {
 
-        $cmd = $this->getCommandPrefix(). 'list vaults';
-
-        exec($cmd, $output);
-
-        $array = \GuzzleHttp\json_decode($output[0]);
+        $array = $this->runOpCommand('list vaults');
 
         return (new Collection($array))->map(function ($object) { return new Vault($object->uuid); });
     }
