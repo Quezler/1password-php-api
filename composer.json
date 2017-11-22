@@ -16,11 +16,13 @@
         "symfony/dom-crawler": "^3.3",
         "symfony/css-selector": "^3.3",
         "vlucas/phpdotenv": "^2.4",
-        "tightenco/collect": "^5.5"
+        "tightenco/collect": "^5.5",
+        "phpunit/phpunit": "^6.4"
     },
     "autoload": {
         "psr-4": {
-            "Quezler\\OnePasswordPhpApi\\": "src/"
+            "Quezler\\OnePasswordPhpApi\\": "src/",
+            "Tests\\": "tests/"
         }
     }
 }

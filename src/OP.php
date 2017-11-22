@@ -23,7 +23,20 @@ class OP
 
     private $session;
 
+    /**
+     * @return string|null
+     */
+    public function getSession()
+    {
+        return $this->session;
+    }
+
     private function fetchSession() {
+
+        if (empty(array_filter($this->getCredentials()))) {
+            throw new LogicException('401: Authentication required.');
+        };
+
         exec(OP::getExecutablePath() .' signin --output=raw '. implode(' ', $this->getCredentials()), $output);
 
         if (!isset($output[0])) {
