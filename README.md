@@ -49,3 +49,7 @@
     suspend       Suspends a user. ✘
     
     update        Check for new version. ✘
+
+## notes for 1password team
+
+- get template is only by name, not uuid (001, etc)
