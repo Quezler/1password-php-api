@@ -2,7 +2,6 @@
 
 namespace Quezler\OnePasswordPhpApi;
 
-use InvalidArgumentException;
 use Symfony\Component\Console\Input\ArrayInput;
 
 class Executable
@@ -29,10 +28,6 @@ class Executable
 
         exec($cmd, $output);
 
-        try {
-            return \GuzzleHttp\json_decode($output[0]); // object
-        } catch (InvalidArgumentException $e) {
-            return $output[0]; // string
-        }
+        return \GuzzleHttp\json_decode($output[0]);
     }
 }
