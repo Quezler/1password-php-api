@@ -74,6 +74,14 @@ class OP
         return \GuzzleHttp\json_decode($output[0]);
     }
 
+    public function getVault(string $query) {
+        $object = $this->command("get vault $query");
+        $object = $this->cast($object);
+        $vault = new Vault($this, $object->uuid);
+        $vault->setDetails($object);
+        return $vault;
+    }
+
     /**
      * @return Collection|Vault[]
      */
