@@ -22,8 +22,10 @@ class ListVaultsCommand extends Command
     {
         $op = (new OP);
 
-        dump(
-            $op->getVaults()
-        );
+        foreach ($op->getVaults() as $vault) {
+            dump(
+                $vault->getDetails()
+            );
+        }
     }
 }

@@ -46,7 +46,7 @@ class OP
          return $this->getExport() .' && '. OP::getExecutablePath() .' '; // export OP_SESSION_my="foobar" && /path/to/package/src/../executable/op
     }
 
-    public function runOpCommand(string $command) {
+    public function command(string $command) {
         $cmd = $this->getCommandPrefix() . $command;
 
         exec($cmd, $output);
@@ -59,8 +59,8 @@ class OP
      */
     public function getVaults(): Collection {
 
-        $array = $this->runOpCommand('list vaults');
+        $array = $this->command('list vaults');
 
-        return (new Collection($array))->map(function ($object) { return new Vault($object->uuid); });
+        return (new Collection($array))->map(function ($object) { return new Vault($this, $object->uuid); });
     }
 }
