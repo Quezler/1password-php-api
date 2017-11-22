@@ -10,6 +10,10 @@ use Quezler\OnePasswordPhpApi\OP;
 class OpLoginTest extends TestCase
 {
     function test_constructor_throws_exception() {
+
+        $dotenv = new Dotenv(__DIR__, '/../.env.example');
+        $dotenv->overload();
+
         $this->expectException(LogicException::class);
 
         (new OP);
@@ -17,7 +21,7 @@ class OpLoginTest extends TestCase
 
     function test_constructor_throws_no_exception() {
         $dotenv = new Dotenv(__DIR__ . '/../');
-        $dotenv->load();
+        $dotenv->overload();
 
         $op = (new OP);
 
