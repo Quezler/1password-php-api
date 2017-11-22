@@ -15,7 +15,8 @@
         "symfony/var-dumper": "^3.3",
         "symfony/dom-crawler": "^3.3",
         "symfony/css-selector": "^3.3",
-        "vlucas/phpdotenv": "^2.4"
+        "vlucas/phpdotenv": "^2.4",
+        "tightenco/collect": "^5.5"
     },
     "autoload": {
         "psr-4": {

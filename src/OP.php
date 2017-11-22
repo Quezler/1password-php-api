@@ -2,6 +2,7 @@
 
 namespace Quezler\OnePasswordPhpApi;
 
+use Illuminate\Support\Collection;
 use LogicException;
 
 class OP
@@ -21,11 +22,6 @@ class OP
 
     private $session;
 
-    function __construct()
-    {
-        $this->session = $this->fetchSession();
-    }
-
     private function fetchSession() {
         exec(OP::getExecutablePath() .' signin --output=raw '. implode(' ', $this->getCredentials()), $output);
 
@@ -34,5 +30,29 @@ class OP
         }
 
         return $output[0];
+    }
+
+    function __construct()
+    {
+        $this->session = $this->fetchSession();
+    }
+
+    public function getExport(): string {
+        return 'export OP_SESSION_my="'. $this->session .'"';
+    }
+
+    public function getCommandPrefix(): string {
+         return $this->getExport() .' && '. OP::getExecutablePath() .' '; // export OP_SESSION_my="foobar" && /path/to/package/src/../executable/op
+    }
+
+    public function getVaults(): Collection {
+
+        $cmd = $this->getCommandPrefix(). 'list vaults';
+
+        exec($cmd, $output);
+
+        $array = \GuzzleHttp\json_decode($output[0]);
+
+        return new Collection($array);
     }
 }
