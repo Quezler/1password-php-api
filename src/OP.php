@@ -81,7 +81,7 @@ class OP
     private $account;
 
     public function getAccount(): Account {
-        return $this->account ?: new Account(
+        return $this->account ?: $this->account = new Account(
             $this, $this->command('get account')
         );
     }
