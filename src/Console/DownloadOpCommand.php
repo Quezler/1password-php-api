@@ -3,6 +3,8 @@
 namespace Quezler\OnePasswordPhpApi\Console;
 
 use GuzzleHttp\Client;
+use Quezler\OnePasswordPhpApi\OP;
+use Quezler\OnePasswordPhpApi\Package;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -72,7 +74,16 @@ class DownloadOpCommand extends Command
             $output->writeln('<error>No compatible download found :(</error>');
         }
 
-        dump($download);
+        $zip = (new Client)->get($download)->getBody()->getContents();
+
+        file_put_contents(Package::getBasePath() . '/downloads/op.zip', $zip);
+
+        $zip = new \ZipArchive;
+        $zip->open(Package::getBasePath() . '/downloads/op.zip');
+        $zip->extractTo(OP::getExecutablePath());
+        $zip->close();
+
+        $output->writeln('<info>Executable saved as <comment>'. OP::getExecutablePath() .'</comment>.</info>');
     }
 
     /**
