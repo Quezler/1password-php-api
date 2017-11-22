@@ -61,6 +61,7 @@ class OP
     }
 
     public function command(string $command) {
+        dump("OP: $command"); // fixme: remove
         $cmd = $this->getCommandPrefix() . $command;
 
         exec($cmd, $output);
