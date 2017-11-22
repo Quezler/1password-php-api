@@ -2,6 +2,8 @@
 
 namespace Quezler\OnePasswordPhpApi;
 
+use LogicException;
+
 class OP
 {
     public static function getExecutablePath() {
@@ -26,6 +28,10 @@ class OP
 
     private function fetchSession() {
         exec(OP::getExecutablePath() .' signin --output=raw '. implode(' ', $this->getCredentials()), $output);
+
+        if (!isset($output[0])) {
+            throw new LogicException('401: Authentication required.');
+        }
 
         return $output[0];
     }
