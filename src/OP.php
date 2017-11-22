@@ -14,55 +14,32 @@ use stdClass;
 
 class OP
 {
-    public static function getExecutablePath() {
-        return Package::getBasePath() . '/executable/op';
-    }
+    /**
+     * @var Executable
+     */
+    private $executable;
 
-    public function getCredentials(): array {
-        return [
-            'your-account-name' =>    getenv('1PASSWORD_ACCOUNT_NAME'),
-            'your-account-address' => getenv('1PASSWORD_ACCOUNT_EMAIL'),
-            'your-secret-key' =>      getenv('1PASSWORD_ACCOUNT_SECRET'),
-            'your-master-password' => getenv('1PASSWORD_ACCOUNT_MASTER'),
-        ];
-    }
-
+    /**
+     * @var Session
+     */
     private $session;
 
     /**
-     * @return string|null
+     * @return Executable
      */
-    public function getSession()
+    public function getExecutable(): Executable
     {
-        return $this->session;
-    }
-
-    private function fetchSession() {
-
-        if (empty(array_filter($this->getCredentials()))) {
-            throw new LogicException('401: Authentication required.');
-        };
-
-        exec(OP::getExecutablePath() .' signin --output=raw '. implode(' ', $this->getCredentials()), $output);
-
-        if (!isset($output[0])) {
-            throw new LogicException('401: Authentication required.');
-        }
-
-        return $output[0];
+        return $this->executable;
     }
 
     function __construct()
     {
-        $this->session = $this->fetchSession();
-    }
-
-    public function getExport(): string {
-        return 'export OP_SESSION_my="'. $this->session .'"';
+        $this->executable = new Executable($this);
+        $this->session = new Session($this);
     }
 
     public function getCommandPrefix(): string {
-         return $this->getExport() .' && '. OP::getExecutablePath() .' '; // export OP_SESSION_my="foobar" && /path/to/package/src/../executable/op
+         return $this->session->getExport() .' && '. $this->executable->getPath() .' '; // export OP_SESSION_my="foobar" && /path/to/package/src/../executable/op
     }
 
     public function command(string $command) {

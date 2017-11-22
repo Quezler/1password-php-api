@@ -3,6 +3,7 @@
 namespace Quezler\OnePasswordPhpApi\Console;
 
 use GuzzleHttp\Client;
+use Quezler\OnePasswordPhpApi\Executable;
 use Quezler\OnePasswordPhpApi\OP;
 use Quezler\OnePasswordPhpApi\Package;
 use Symfony\Component\Console\Command\Command;
@@ -83,9 +84,9 @@ class DownloadOpCommand extends Command
         $zip->extractTo(Package::getBasePath() . '/executable');
         $zip->close();
 
-        chmod(OP::getExecutablePath(), 0777);
+        chmod(Package::getBasePath() . '/executable/op', 0777);
 
-        $output->writeln('<info>Executable saved as <comment>'. OP::getExecutablePath() .'</comment>.</info>');
+        $output->writeln('<info>Executable saved as <comment>'. Package::getBasePath() . '/executable/op' .'</comment>.</info>');
     }
 
     /**
