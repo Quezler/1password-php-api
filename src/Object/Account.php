@@ -2,6 +2,7 @@
 
 namespace Quezler\OnePasswordPhpApi\Object;
 
+use Carbon\Carbon;
 use stdClass;
 
 class Account
@@ -23,5 +24,7 @@ class Account
         foreach (get_object_vars($object) as $key => $value) {
             $this->$key = $value;
         }
+
+        $this->createdAt = new Carbon($this->createdAt);
     }
 }

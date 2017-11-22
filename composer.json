@@ -17,7 +17,8 @@
         "symfony/css-selector": "^3.3",
         "vlucas/phpdotenv": "^2.4",
         "tightenco/collect": "^5.5",
-        "phpunit/phpunit": "^6.4"
+        "phpunit/phpunit": "^6.4",
+        "nesbot/carbon": "^1.22"
     },
     "autoload": {
         "psr-4": {
