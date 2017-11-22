@@ -76,11 +76,11 @@ class DownloadOpCommand extends Command
 
         $zip = (new Client)->get($download)->getBody()->getContents();
 
-        file_put_contents(Package::getBasePath() . '/downloads/op.zip', $zip);
+        file_put_contents(Package::getBasePath() . '/executable/op.zip', $zip);
 
         $zip = new \ZipArchive;
-        $zip->open(Package::getBasePath() . '/downloads/op.zip');
-        $zip->extractTo(Package::getBasePath() . '/downloads');
+        $zip->open(Package::getBasePath() . '/executable/op.zip');
+        $zip->extractTo(Package::getBasePath() . '/executable');
         $zip->close();
 
         $output->writeln('<info>Executable saved as <comment>'. OP::getExecutablePath() .'</comment>.</info>');
