@@ -31,5 +31,6 @@ class Account
         }
 
         $this->createdAt = new Carbon($this->createdAt);
+        $this->avatar = new Avatar($this->op, $this->avatar);
     }
 }

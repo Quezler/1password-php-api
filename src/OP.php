@@ -78,8 +78,10 @@ class OP
         return (new Collection($array))->map(function ($object) { return new Vault($this, $object->uuid); });
     }
 
+    private $account;
+
     public function getAccount(): Account {
-        return new Account(
+        return $this->account ?: new Account(
             $this, $this->command('get account')
         );
     }

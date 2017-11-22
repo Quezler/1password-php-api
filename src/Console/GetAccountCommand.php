@@ -22,8 +22,12 @@ class GetAccountCommand extends Command
     {
         $op = (new OP);
 
+        $account = $op->getAccount();
+
         dump(
-            $op->getAccount()
+            $account
         );
+
+        dump($account->avatar->getSrc());
     }
 }

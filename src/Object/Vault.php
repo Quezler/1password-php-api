@@ -29,6 +29,10 @@ class Vault
     }
 
     public function getDetails() {
-        return $this->op->command("get vault {$this->uuid}");
+        $object = $this->op->command("get vault {$this->uuid}");
+
+        $object->avatar = new Avatar($this->op, $object->avatar);
+
+        return $object;
     }
 }
