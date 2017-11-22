@@ -3,6 +3,8 @@
 namespace Tests;
 
 use Dotenv\Dotenv;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 use PHPUnit\Framework\TestCase;
 use Quezler\OnePasswordPhpApi\Object\Account;
 use Quezler\OnePasswordPhpApi\Object\Avatar;
@@ -45,6 +47,20 @@ class OpTest extends TestCase
     function account() {
         $account = $this->op->getAccount();
         self::assertInstanceOf(Account::class, $account);
-        self::assertNotEmpty($account->avatar->getSrc());
+
+        $avatar = $account->avatar;
+        self::assertNotEmpty($avatar->getSrc());
+
+        $status = (new Client)->get($avatar->getSrc())->getStatusCode();
+
+        self::assertEquals(200, $status);
+
+        try {
+            $status = (new Client)->get($avatar->getSrc(). 'nope')->getStatusCode();
+        } catch (ClientException $exception) {
+            $status = $exception->getResponse()->getStatusCode();
+        }
+
+        self::assertEquals(403, $status);
     }
 }
