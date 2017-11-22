@@ -28,11 +28,10 @@ class Account
     {
         $this->op = $op;
 
+        $object = $op->cast($object);
+
         foreach (get_object_vars($object) as $key => $value) {
             $this->$key = $value;
         }
-
-        $this->createdAt = new Carbon($this->createdAt);
-        $this->avatar = new Avatar($this->op, $this->avatar);
     }
 }

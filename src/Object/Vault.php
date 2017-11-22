@@ -3,11 +3,12 @@
 namespace Quezler\OnePasswordPhpApi\Object;
 
 use Quezler\OnePasswordPhpApi\OP;
+use Quezler\OnePasswordPhpApi\Traits\HasDetails;
 use Quezler\OnePasswordPhpApi\Traits\HasUuid;
 
 class Vault
 {
-    use HasUuid;
+    use HasUuid, HasDetails;
     /**
      * @var OP
      */
@@ -25,11 +26,11 @@ class Vault
         $this->uuid = $uuid;
     }
 
-    public function getDetails() {
-        $object = $this->op->command("get vault {$this->uuid}");
-
-        $object->avatar = new Avatar($this->op, $object->avatar);
-
-        return $object;
-    }
+//    public function getDetails() {
+//        $object = $this->op->command("get vault {$this->uuid}");
+//
+//        $object->avatar = new Avatar($this->op, $object->avatar);
+//
+//        return $object;
+//    }
 }

@@ -2,9 +2,11 @@
 
 namespace Quezler\OnePasswordPhpApi;
 
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use LogicException;
 use Quezler\OnePasswordPhpApi\Object\Account;
+use Quezler\OnePasswordPhpApi\Object\Avatar;
 use Quezler\OnePasswordPhpApi\Object\Item;
 use Quezler\OnePasswordPhpApi\Object\Template;
 use Quezler\OnePasswordPhpApi\Object\Vault;
@@ -108,5 +110,18 @@ class OP
             $this->command('list templates')
         ))->map(function (stdClass $object) { return new Template($this, $object); });
 
+    }
+
+    public function cast(stdClass $object) {
+
+        if (isset($object->avatar)) {
+            $object->avatar = new Avatar($this, $object->avatar);
+        }
+
+        if (isset($object->createdAt)) {
+            $object->createdAt = new Carbon($object->createdAt);
+        }
+
+        return $object;
     }
 }
