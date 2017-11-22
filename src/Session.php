@@ -14,7 +14,7 @@ class Session
     /**
      * @var string
      */
-    private $session;
+    private $session = 'foobar';
 
     function __construct(OP $op)
     {
@@ -37,7 +37,11 @@ class Session
             throw new LogicException('401: Authentication required.');
         };
 
-        exec($this->op->getExecutable()->getPath() .' signin --output=raw '. implode(' ', $this->getCredentials()), $output);
+        $cmd = $this->op->getExecutable()->command('signin', array_merge([
+            '--output' => 'raw',
+        ], $this->getCredentials()));
+
+        exec($cmd, $output);
 
         if (!isset($output[0])) {
             throw new LogicException('401: Authentication required.');
