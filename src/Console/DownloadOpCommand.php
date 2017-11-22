@@ -22,7 +22,15 @@ class DownloadOpCommand extends Command
      */
     private $output;
 
+    /**
+     * @var string
+     */
     private $os;
+
+    /**
+     * @var integer
+     */
+    private $architecture;
 
     protected function configure()
     {
@@ -39,6 +47,7 @@ class DownloadOpCommand extends Command
         $this->output = $output;
 
         $this->detectOperatingSystem();
+        $this->detectBinaryArchitecture();
 //        $this->getReleases();
 
         $html = (new Client)->get(self::releases)->getBody()->getContents();
@@ -85,6 +94,17 @@ class DownloadOpCommand extends Command
         $this->output->writeln("<info>OS detected as <comment>{$osRaw} ($osLow)</comment>.</info>");
 
         $this->os = $osLow;
+    }
+
+    /**
+     * Find out if this device is 32 or 64 bit, to download '386' or 'amd64' respectively.
+     *
+     * https://stackoverflow.com/questions/5423848/checking-if-your-code-is-running-on-64-bit-php
+     */
+    private function detectBinaryArchitecture() {
+        $this->architecture = PHP_INT_SIZE * 8; // 32 or 64
+
+        $this->output->writeln("<info>Architecture detected as <comment>{$this->architecture}</comment> bit.</info>");
     }
 
 //    private function getReleases() {
