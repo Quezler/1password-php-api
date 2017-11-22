@@ -1,0 +1,13 @@
+{
+    "name": "quezler/1password-php-api",
+    "description": "Attempt at a 1Password api client for php.",
+    "type": "wrapper",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Patrick 'Quezler' Mounier",
+            "email": "Quezler@me.com"
+        }
+    ],
+    "require": {}
+}
