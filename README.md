@@ -25,7 +25,7 @@
         account     Get get account attributes. ✔
         document    Download a document.
         item        Get item details.
-        template    Get item template.
+        template    Get item template. 
         totp        Get time-based one-time password (TOTP).
         user        Get user attributes.
         vault       Get vault attributes. ✔
@@ -35,8 +35,8 @@
         documents    Get a list of documents.
         events       Get audit events.
         groups       Get a list of groups.
-        items        Get a list of items.
-        templates    Get a list of templates.
+        items        Get a list of items. ✔
+        templates    Get a list of templates. ✔
         users        Get a list of users.
         vaults       Get a list of vaults. ✔
     

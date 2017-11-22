@@ -30,6 +30,7 @@ class OpTest extends TestCase
     function test_all() {
         $this->vaults();
         $this->account();
+        $this->templates();
     }
 
     function vaults() {
@@ -62,5 +63,9 @@ class OpTest extends TestCase
         }
 
         self::assertEquals(403, $status);
+    }
+
+    function templates() {
+        self::assertGreaterThanOrEqual(18, $this->op->getTemplates()->count());
     }
 }

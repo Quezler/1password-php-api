@@ -6,7 +6,9 @@ use Illuminate\Support\Collection;
 use LogicException;
 use Quezler\OnePasswordPhpApi\Object\Account;
 use Quezler\OnePasswordPhpApi\Object\Item;
+use Quezler\OnePasswordPhpApi\Object\Template;
 use Quezler\OnePasswordPhpApi\Object\Vault;
+use stdClass;
 
 class OP
 {
@@ -99,5 +101,12 @@ class OP
         $items = $this->command($command);
 
         return (new Collection($items))->map(function ($object) { return new Item($this, $object); });
+    }
+
+    public function getTemplates(): Collection {
+        return (new Collection(
+            $this->command('list templates')
+        ))->map(function (stdClass $object) { return new Template($this, $object); });
+
     }
 }
