@@ -39,8 +39,21 @@ class ReadMeCommand extends Command
         })->toArray();
 
         // https://stackoverflow.com/questions/8586141/implode-array-with-and-add-and-before-last-item
-        $vaultnames = join(' & ', array_filter(array_merge(array(join(', ', array_slice($vaultnames, 0, -1))), array_slice($vaultnames, -1)), 'strlen'));
+        $vaultnames = $this->implodeCommaCommaAmpersand($vaultnames);
 
         $output->writeln("<info><comment>{$vaultnames}</comment> if i recall correctly.</info>");
+
+        $vaultsizes = $vaults->map(function (Vault $vault) use ($op) {
+            return $op->getItems($vault)->count();
+        })->toArray();
+
+        $vaultsizes = $this->implodeCommaCommaAmpersand($vaultsizes);
+
+        $output->writeln("<info>And they have <comment>{$vaultsizes}</comment> items inside them respectively.</info>");
+    }
+
+    // https://stackoverflow.com/questions/8586141/implode-array-with-and-add-and-before-last-item
+    private function implodeCommaCommaAmpersand(array $array) {
+        return join(' & ', array_filter(array_merge(array(join(', ', array_slice($array, 0, -1))), array_slice($array, -1)), 'strlen'));
     }
 }
