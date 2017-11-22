@@ -10,6 +10,9 @@ use Symfony\Component\Console\Application;
 
 require __DIR__.'/vendor/autoload.php';
 
+$dotenv = new Dotenv\Dotenv(__DIR__);
+$dotenv->load();
+
 $app = (new Application('1password php api', 'v0.0.0'));
 
 $app->add(new DefaultCommand);

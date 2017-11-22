@@ -14,7 +14,8 @@
         "guzzlehttp/guzzle": "^6.3",
         "symfony/var-dumper": "^3.3",
         "symfony/dom-crawler": "^3.3",
-        "symfony/css-selector": "^3.3"
+        "symfony/css-selector": "^3.3",
+        "vlucas/phpdotenv": "^2.4"
     },
     "autoload": {
         "psr-4": {
