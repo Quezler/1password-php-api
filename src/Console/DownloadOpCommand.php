@@ -50,6 +50,8 @@ class DownloadOpCommand extends Command
         $this->detectBinaryArchitecture();
 //        $this->getReleases();
 
+        $output->writeln('');
+
         $html = (new Client)->get(self::releases)->getBody()->getContents();
 
         $crawler = new Crawler($html);
@@ -61,7 +63,10 @@ class DownloadOpCommand extends Command
         $downloads = $mostRecentRelease->filter('a[href]');
 
         $downloads->each(function (Crawler $anchor) {
-            dump($anchor->attr('href'));
+            $href = $anchor->attr('href');
+            dump(
+                [$href, var_export($this->downloadIsCompatible($href), true)]
+            );
         });
 
         /**
@@ -105,6 +110,16 @@ class DownloadOpCommand extends Command
         $this->architecture = PHP_INT_SIZE * 8; // 32 or 64
 
         $this->output->writeln("<info>Architecture detected as <comment>{$this->architecture}</comment> bit.</info>");
+    }
+
+    private function downloadIsCompatible(string $href): bool {
+
+        $match = strtr('op_os_architecture', [
+            'os' => $this->os,
+            'architecture' => ($this->architecture === 64 ? 'amd64' : '386'),
+        ]);
+
+        return strpos($href, $match) !== false;
     }
 
 //    private function getReleases() {
