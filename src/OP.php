@@ -5,6 +5,7 @@ namespace Quezler\OnePasswordPhpApi;
 use Illuminate\Support\Collection;
 use LogicException;
 use Quezler\OnePasswordPhpApi\Object\Account;
+use Quezler\OnePasswordPhpApi\Object\Item;
 use Quezler\OnePasswordPhpApi\Object\Vault;
 
 class OP
@@ -85,5 +86,11 @@ class OP
         return $this->account ?: $this->account = new Account(
             $this, $this->command('get account')
         );
+    }
+
+    public function getItems(Vault $vault = null): Collection {
+        $items = $this->command('list items');
+
+        return (new Collection($items))->map(function ($object) { return new Item($this, $object); });
     }
 }
