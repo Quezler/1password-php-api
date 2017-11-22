@@ -5,6 +5,6 @@ namespace Quezler\OnePasswordPhpApi;
 class OP
 {
     public static function getExecutablePath() {
-        return Package::getBasePath() . '/downloads/op';
+        return Package::getBasePath() . '/executable/op';
     }
 }
