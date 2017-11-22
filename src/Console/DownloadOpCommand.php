@@ -80,7 +80,7 @@ class DownloadOpCommand extends Command
 
         $zip = new \ZipArchive;
         $zip->open(Package::getBasePath() . '/downloads/op.zip');
-        $zip->extractTo(OP::getExecutablePath());
+        $zip->extractTo(Package::getBasePath() . '/downloads');
         $zip->close();
 
         $output->writeln('<info>Executable saved as <comment>'. OP::getExecutablePath() .'</comment>.</info>');
