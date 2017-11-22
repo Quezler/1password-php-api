@@ -38,6 +38,7 @@ class ReadMeCommand extends Command
             return $vault->getDetails()->name;
         })->toArray();
 
+        // https://stackoverflow.com/questions/8586141/implode-array-with-and-add-and-before-last-item
         $vaultnames = join(' & ', array_filter(array_merge(array(join(', ', array_slice($vaultnames, 0, -1))), array_slice($vaultnames, -1)), 'strlen'));
 
         $output->writeln("<info><comment>{$vaultnames}</comment> if i recall correctly.</info>");
