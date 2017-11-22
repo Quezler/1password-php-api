@@ -80,7 +80,7 @@ class OP
 
     public function getAccount(): Account {
         return new Account(
-            $this->command('get account')
+            $this, $this->command('get account')
         );
     }
 }

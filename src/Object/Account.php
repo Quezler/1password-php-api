@@ -3,10 +3,13 @@
 namespace Quezler\OnePasswordPhpApi\Object;
 
 use Carbon\Carbon;
+use Quezler\OnePasswordPhpApi\OP;
 use stdClass;
 
 class Account
 {
+    private $op;
+
     public $uuid;
     public $type;
     public $state;
@@ -19,8 +22,10 @@ class Account
     public $baseAvatarURL;
     public $baseAttachmentURL;
 
-    function __construct(stdClass $object)
+    function __construct(OP $op, stdClass $object)
     {
+        $this->op = $op;
+
         foreach (get_object_vars($object) as $key => $value) {
             $this->$key = $value;
         }
