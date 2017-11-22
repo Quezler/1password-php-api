@@ -19,6 +19,8 @@ class DownloadOpCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        //
+        $os = php_uname('s'); // 's': Operating system name. eg. FreeBSD.
+
+        $output->writeln("<info>OS detected as <comment>{$os}</comment>.</info>");
     }
 }
