@@ -5,6 +5,7 @@
 
 use Quezler\OnePasswordPhpApi\Console\DefaultCommand;
 use Quezler\OnePasswordPhpApi\Console\DownloadOpCommand;
+use Quezler\OnePasswordPhpApi\Console\GetAccountCommand;
 use Quezler\OnePasswordPhpApi\Console\ListVaultsCommand;
 use Quezler\OnePasswordPhpApi\Console\OpSigninCommand;
 use Symfony\Component\Console\Application;
@@ -20,5 +21,6 @@ $app->add(new DefaultCommand);
 $app->add(new DownloadOpCommand);
 $app->add(new OpSigninCommand);
 $app->add(new ListVaultsCommand);
+$app->add(new GetAccountCommand);
 
 $app->run();
