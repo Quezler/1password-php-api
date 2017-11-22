@@ -4,6 +4,7 @@ namespace Quezler\OnePasswordPhpApi;
 
 use Illuminate\Support\Collection;
 use LogicException;
+use Quezler\OnePasswordPhpApi\Object\Vault;
 
 class OP
 {
@@ -45,6 +46,9 @@ class OP
          return $this->getExport() .' && '. OP::getExecutablePath() .' '; // export OP_SESSION_my="foobar" && /path/to/package/src/../executable/op
     }
 
+    /**
+     * @return Collection|Vault[]
+     */
     public function getVaults(): Collection {
 
         $cmd = $this->getCommandPrefix(). 'list vaults';
@@ -53,6 +57,6 @@ class OP
 
         $array = \GuzzleHttp\json_decode($output[0]);
 
-        return new Collection($array);
+        return (new Collection($array))->map(function ($object) { return new Vault($object->uuid); });
     }
 }
