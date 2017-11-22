@@ -62,31 +62,17 @@ class DownloadOpCommand extends Command
 
         $downloads = $mostRecentRelease->filter('a[href]');
 
-        $downloads->each(function (Crawler $anchor) {
-            $href = $anchor->attr('href');
-            dump(
-                [$href, var_export($this->downloadIsCompatible($href), true)]
-            );
-        });
+        $download = $this->getCompatibleDownload($downloads);
 
-        /**
-        "#v11001"
-        "https://cache.agilebits.com/dist/1P/op/pkg/v0.1.1/op_darwin_386_v0.1.1.zip"
-        "https://cache.agilebits.com/dist/1P/op/pkg/v0.1.1/op_darwin_amd64_v0.1.1.zip"
-        "https://cache.agilebits.com/dist/1P/op/pkg/v0.1.1/op_freebsd_386_v0.1.1.zip"
-        "https://cache.agilebits.com/dist/1P/op/pkg/v0.1.1/op_freebsd_amd64_v0.1.1.zip"
-        "https://cache.agilebits.com/dist/1P/op/pkg/v0.1.1/op_freebsd_arm_v0.1.1.zip"
-        "https://cache.agilebits.com/dist/1P/op/pkg/v0.1.1/op_linux_386_v0.1.1.zip"
-        "https://cache.agilebits.com/dist/1P/op/pkg/v0.1.1/op_linux_amd64_v0.1.1.zip"
-        "https://cache.agilebits.com/dist/1P/op/pkg/v0.1.1/op_linux_arm_v0.1.1.zip"
-        "https://cache.agilebits.com/dist/1P/op/pkg/v0.1.1/op_netbsd_386_v0.1.1.zip"
-        "https://cache.agilebits.com/dist/1P/op/pkg/v0.1.1/op_netbsd_amd64_v0.1.1.zip"
-        "https://cache.agilebits.com/dist/1P/op/pkg/v0.1.1/op_netbsd_arm_v0.1.1.zip"
-        "https://cache.agilebits.com/dist/1P/op/pkg/v0.1.1/op_openbsd_386_v0.1.1.zip"
-        "https://cache.agilebits.com/dist/1P/op/pkg/v0.1.1/op_openbsd_amd64_v0.1.1.zip"
-        "https://cache.agilebits.com/dist/1P/op/pkg/v0.1.1/op_windows_386_v0.1.1.zip"
-        "https://cache.agilebits.com/dist/1P/op/pkg/v0.1.1/op_windows_amd64_v0.1.1.zip"
-         */
+        $output->writeln('');
+
+//        $download = null;
+
+        if (is_null($download)) {
+            $output->writeln('<error>No compatible download found :(</error>');
+        }
+
+        dump($download);
     }
 
     /**
@@ -110,6 +96,25 @@ class DownloadOpCommand extends Command
         $this->architecture = PHP_INT_SIZE * 8; // 32 or 64
 
         $this->output->writeln("<info>Architecture detected as <comment>{$this->architecture}</comment> bit.</info>");
+    }
+
+    private function getCompatibleDownload(Crawler $downloads) {
+
+        $return = null;
+
+        $downloads->each(function (Crawler $anchor) use (&$return) {
+            $href = $anchor->attr('href');
+            $compatible = $this->downloadIsCompatible($href);
+
+            if ($compatible) {
+                $this->output->writeln("<info>{$href}</info>");
+                $return = $href;
+            } else {
+                $this->output->writeln("<comment>{$href}</comment>");
+            }
+        });
+
+        return $return;
     }
 
     private function downloadIsCompatible(string $href): bool {
