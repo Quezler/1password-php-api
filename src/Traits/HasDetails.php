@@ -19,7 +19,7 @@ trait HasDetails
 
     private function fetchDetails() {
         return $this->op->cast(
-            $this->op->command("get ". strtolower((new ReflectionClass($this))->getShortName()) ." {$this->uuid}")
+            $this->op->getExecutable()->command("get ". strtolower((new ReflectionClass($this))->getShortName()), [$this->uuid])
         );
     }
 }
