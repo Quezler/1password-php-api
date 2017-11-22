@@ -23,13 +23,15 @@ class TestCommand extends Command
     {
         $op = (new OP);
 
-        $vault = $op->getVault('tmp');
+//        $vault = $op->getVault('tmp');
+//
+//        $template = $op->getTemplates()->filter(function (Template $template) {
+//            return $template->getDetails()->name == 'Password';
+//        })->filter();
+//
+////        dump($vault);
+//        dump($template);
 
-        $template = $op->getTemplates()->filter(function (Template $template) {
-            return $template->getDetails()->name == 'Password';
-        })->filter();
-
-//        dump($vault);
-        dump($template);
+        dump($op->getTemplates());
     }
 }

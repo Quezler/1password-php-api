@@ -31,7 +31,7 @@ class Template
 
     private function fetchDetails() {
         return $this->op->cast(
-            $this->op->command("get ". strtolower((new \ReflectionClass($this))->getShortName()) ." {$this->name}")
+            $this->op->getExecutable()->command("get ". strtolower((new \ReflectionClass($this))->getShortName()), [$this->name])
         );
     }
 }
