@@ -89,7 +89,14 @@ class OP
     }
 
     public function getItems(Vault $vault = null): Collection {
-        $items = $this->command('list items');
+
+        $command = 'list items';
+
+        if ($vault) {
+            $command = "$command --vault={$vault->getUuid()}";
+        }
+
+        $items = $this->command($command);
 
         return (new Collection($items))->map(function ($object) { return new Item($this, $object); });
     }

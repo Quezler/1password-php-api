@@ -3,18 +3,15 @@
 namespace Quezler\OnePasswordPhpApi\Object;
 
 use Quezler\OnePasswordPhpApi\OP;
+use Quezler\OnePasswordPhpApi\Traits\HasUuid;
 
 class Vault
 {
+    use HasUuid;
     /**
      * @var OP
      */
     private $op;
-
-    /**
-     * @var string
-     */
-    private $uuid;
 
 //    private $name;
 //    private $type;
